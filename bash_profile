@@ -40,4 +40,5 @@ function prompt()
 export PROMPT_COMMAND=prompt
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
-export PATH="$PATH:/Users/cmotl/.modular/bin"
+export PATH="$PATH:$HOME/.local/bin:"
+eval "$(direnv hook bash)"
