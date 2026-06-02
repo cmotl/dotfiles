@@ -36,7 +36,7 @@ dotfiles/
 
 4. **Link dotfiles** — use a temporary `nix shell` to avoid a conflicting imperative install:
    ```sh
-   nix shell nixpkgs#stow --command stow --target=~ -d ~/dotfiles bash tmux vim nvim nix
+   nix shell nixpkgs#stow --command stow --target="$HOME" -d "$HOME/dotfiles" bash tmux vim nvim nix
    ```
 
 5. **Activate Home Manager** — this installs stow (and everything else) permanently:
@@ -62,4 +62,4 @@ home-manager switch --flake ~/dotfiles/home-manager#cmotl
 ## Adding a new dotfile
 
 1. Create a package dir mirroring the target path, e.g. `git/.gitconfig`
-2. Run `stow --target=~ git`
+2. Run `stow --target="$HOME" git`
