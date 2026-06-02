@@ -10,6 +10,7 @@ dotfiles/
   tmux/       → ~/.tmux.conf
   vim/        → ~/.vimrc
   nvim/       → ~/.config/nvim/   (kickstart-based Neovim config)
+  nix/        → ~/.config/nix/nix.conf
   home-manager/
     flake.nix
     home.nix   ← packages managed here
@@ -27,12 +28,18 @@ dotfiles/
    git clone <your-repo> ~/dotfiles
    ```
 
-3. **Link dotfiles** — use a temporary `nix shell` to avoid a conflicting imperative install:
+3. **Enable Nix experimental features** — required before running any `nix` commands:
    ```sh
-   nix shell nixpkgs#stow --command stow --target=~ -d ~/dotfiles bash tmux vim nvim
+   mkdir -p ~/.config/nix
+   cp ~/dotfiles/nix/.config/nix/nix.conf ~/.config/nix/nix.conf
    ```
 
-4. **Activate Home Manager** — this installs stow (and everything else) permanently:
+4. **Link dotfiles** — use a temporary `nix shell` to avoid a conflicting imperative install:
+   ```sh
+   nix shell nixpkgs#stow --command stow --target=~ -d ~/dotfiles bash tmux vim nvim nix
+   ```
+
+5. **Activate Home Manager** — this installs stow (and everything else) permanently:
    ```sh
    cd ~/dotfiles/home-manager
    nix run home-manager/master -- switch --flake .#cmotl
