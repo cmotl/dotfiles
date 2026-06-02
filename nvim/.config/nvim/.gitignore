@@ -1,0 +1,10 @@
+tags
+test.sh
+.luarc.json
+nvim
+
+spell/
+
+# nvim-pack-lock.json is tracked in this personal fork (see :help vim.pack-lockfile)
+
+.DS_Store
