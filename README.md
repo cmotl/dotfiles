@@ -15,26 +15,30 @@ dotfiles/
     home.nix   ← packages managed here
 ```
 
-## Setup
+## Bootstrap (new machine)
 
-### 1. Stow (dotfile symlinks)
+1. **Install Nix** — use the [Determinate Systems installer](https://github.com/DeterminateSystems/nix-installer):
+   ```sh
+   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+   ```
 
-```sh
-brew install stow   # or: nix profile install nixpkgs#stow
-cd ~/dotfiles
-stow --target=~ bash tmux vim nvim
-```
+2. **Clone dotfiles**
+   ```sh
+   git clone <your-repo> ~/dotfiles
+   ```
 
-### 2. Home Manager (packages)
+3. **Link dotfiles** — use a temporary `nix shell` to avoid a conflicting imperative install:
+   ```sh
+   nix shell nixpkgs#stow --command stow --target=~ -d ~/dotfiles bash tmux vim nvim
+   ```
 
-Requires [Nix](https://nixos.org/download/) with flakes enabled.
+4. **Activate Home Manager** — this installs stow (and everything else) permanently:
+   ```sh
+   cd ~/dotfiles/home-manager
+   nix run home-manager/master -- switch --flake .#cmotl
+   ```
 
-```sh
-cd ~/dotfiles/home-manager
-nix run home-manager/master -- switch --flake .#cmotl
-```
-
-After the first run, `home-manager` is on your PATH:
+After step 4, `home-manager` is on your PATH for future updates:
 
 ```sh
 home-manager switch --flake ~/dotfiles/home-manager#cmotl
