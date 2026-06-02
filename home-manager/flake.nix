@@ -9,10 +9,17 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    homeConfigurations."cmotl" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-      modules = [ ./home.nix ];
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      user = builtins.getEnv "USER";
+      homeDir = builtins.getEnv "HOME";
+    in {
+      homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+        modules = [
+          { home.username = user; home.homeDirectory = homeDir; }
+          ./home.nix
+        ];
+      };
     };
-  };
 }

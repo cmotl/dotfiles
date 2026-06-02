@@ -16,6 +16,6 @@ done
   stow --target="$HOME" -d "$DOTFILES" bash tmux vim nvim nix
 
 # Activate home-manager (installs all packages declaratively)
-"${NIX[@]}" run home-manager/master -- switch --flake "$DOTFILES/home-manager#cmotl"
+"${NIX[@]}" run home-manager/master -- switch --flake "$DOTFILES/home-manager#$(whoami)" --impure
 
 echo "Done. Open a new shell to pick up the new environment."

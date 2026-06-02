@@ -32,7 +32,7 @@ dotfiles/
 After bootstrap, `home-manager` is on your PATH for future updates:
 
 ```sh
-home-manager switch --flake ~/dotfiles/home-manager#cmotl
+home-manager switch --flake ~/dotfiles/home-manager#"$(whoami)" --impure
 ```
 
 ## Adding packages
@@ -40,7 +40,7 @@ home-manager switch --flake ~/dotfiles/home-manager#cmotl
 Edit `home-manager/home.nix`, then:
 
 ```sh
-home-manager switch --flake ~/dotfiles/home-manager#cmotl
+home-manager switch --flake ~/dotfiles/home-manager#"$(whoami)" --impure
 ```
 
 ## Adding a new dotfile
