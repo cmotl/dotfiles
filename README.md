@@ -23,29 +23,13 @@ dotfiles/
    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
    ```
 
-2. **Clone dotfiles**
+2. **Clone and run**
    ```sh
-   git clone <your-repo> ~/dotfiles
+   git clone git@github.com:cmotl/dotfiles.git ~/dotfiles
+   ~/dotfiles/bootstrap.sh
    ```
 
-3. **Enable Nix experimental features** — required before running any `nix` commands:
-   ```sh
-   mkdir -p ~/.config/nix
-   cp ~/dotfiles/nix/.config/nix/nix.conf ~/.config/nix/nix.conf
-   ```
-
-4. **Link dotfiles** — use a temporary `nix shell` to avoid a conflicting imperative install:
-   ```sh
-   nix shell nixpkgs#stow --command stow --target="$HOME" -d "$HOME/dotfiles" bash tmux vim nvim nix
-   ```
-
-5. **Activate Home Manager** — this installs stow (and everything else) permanently:
-   ```sh
-   cd ~/dotfiles/home-manager
-   nix run home-manager/master -- switch --flake .#cmotl
-   ```
-
-After step 4, `home-manager` is on your PATH for future updates:
+After bootstrap, `home-manager` is on your PATH for future updates:
 
 ```sh
 home-manager switch --flake ~/dotfiles/home-manager#cmotl
