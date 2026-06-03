@@ -7,6 +7,9 @@
     tree-sitter
     stow
     nerd-fonts.hack
+    # Modern bash (macOS ships 3.2) so direnv evaluates Nix dev-env scripts
+    # without choking on bash 4+ syntax.
+    bashInteractive
   ];
 
   # Symlink Hack Nerd Font into ~/Library/Fonts (macOS)
@@ -18,6 +21,8 @@
   programs.direnv = {
     enable = true;
     enableBashIntegration = true;
+    # Robust, cached `use flake` (writes ~/.config/direnv/direnvrc).
+    nix-direnv.enable = true;
   };
 
   programs.home-manager.enable = true;

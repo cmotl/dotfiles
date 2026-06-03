@@ -3,6 +3,19 @@ if [ -f ~/.bashrc ]; then
 fi
 export TERM=xterm-256color
 
+# Nix (multi-user) + home-manager session environment.
+# Prepends ~/.nix-profile/bin to PATH so the Nix tools (incl. direnv) win over
+# system/app copies, and puts `nix` on PATH for direnv's `use flake`.
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+  . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+fi
+# Force Nix profiles to the front of PATH so the Nix `direnv` (built against a
+# modern bash) wins over /Applications/Wireshark.app's copy on /etc/paths.d.
+export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+
 source ~/.shell_colors.sh
 source ~/.aliases.sh
 
